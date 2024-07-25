@@ -60,7 +60,12 @@ const Navbar = () => {
 
       <ul className="flex justify-center items-center gap-12 max-md:hidden">
         {navbarLinks.map(({ link, title }) => (
-          <NavLink link={link} title={title} isActive={pathname === link} />
+          <NavLink
+            link={link}
+            title={title}
+            isActive={pathname === link}
+            key={title}
+          />
         ))}
       </ul>
 
@@ -71,7 +76,12 @@ const Navbar = () => {
         <SheetContent className="w-[400px] sm:w-[540px] bg-[#fcfcfc]">
           <ul className="flex justify-center items-center flex-col gap-12 md:hidden mt-8">
             {navbarLinks.map(({ link, title }) => (
-              <NavLink link={link} title={title} isActive={pathname === link} />
+              <NavLink
+                link={link}
+                title={title}
+                isActive={pathname === link}
+                key={title}
+              />
             ))}
           </ul>
         </SheetContent>

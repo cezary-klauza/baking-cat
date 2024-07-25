@@ -19,7 +19,8 @@ const config = {
     },
     extend: {
       backgroundImage: {
-        'about-us': "url('/about-cupcakes.jpg')"
+        'about-us': "url('/about-cupcakes.jpg')",
+        'products-hero': "url('/products-cake.jpg')"
       },
       colors: {
         red: {
@@ -39,13 +40,16 @@ const config = {
         gray: {
           1: "#A99A99",
           2: "#6F6363",
-          3: "#A2A2A2"
+          3: "#A2A2A2",
+          4: "#FAFAFA"
         },
         black: {
           1: "#2C2C2C"
         },
         orange: {
-          1: "#B5562E"
+          1: "#B5562E",
+          2: "#EEA76B",
+          3: '#A36260'
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

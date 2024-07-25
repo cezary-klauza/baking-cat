@@ -5,8 +5,9 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { aboutUsParagraphs } from "@/constants";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import FAQCard from "./FAQCard";
 
 type ParagraphProps = {
   icon: string;
@@ -34,7 +35,12 @@ const Paragraph = ({ icon, iconAlt, text }: ParagraphProps) => {
 };
 
 const AboutUsCard = () => {
-  const [hover, setHover] = useState(true);
+  const window = useWindowSize();
+  const [hover, setHover] = useState(false);
+
+  useEffect(() => {
+    setHover(window.width < 1100);
+  }, [window]);
 
   return (
     <div
@@ -52,18 +58,23 @@ const AboutUsCard = () => {
       </h3>
       <div
         className={clsx(
-          "w-full flex flex-col gap-8 max-lg:gap-16 justify-center items-center opacity-0 transition-opacity duration-400 z-10",
+          "w-full px-12 flex flex-col gap-8 max-lg:gap-16 justify-center items-center opacity-0 transition-opacity duration-400 z-10",
           { "opacity-100": hover }
         )}
       >
-        {aboutUsParagraphs.map(({ text, icon, iconAlt }, i) => (
-          <Paragraph
-            text={text}
-            icon={icon}
-            iconAlt={iconAlt}
-            iconSide={i % 2 === 0 ? "left" : "right"}
-          />
-        ))}
+        <div className="flex lg:flex-row flex-col gap-6">
+          {aboutUsParagraphs.map(({ text, icon, iconAlt }, i) => (
+            <FAQCard
+              description={text}
+              textColor="text-white"
+              img={icon}
+              alt={iconAlt}
+              key={iconAlt}
+              invertIcon
+              className="bg-black-1 bg-opacity-40 border-0"
+            />
+          ))}
+        </div>
 
         <Link href="/aboutus">
           <Button size="xl" className="bg-red-2 text-xl hover:bg-red-1">

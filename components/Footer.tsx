@@ -13,7 +13,7 @@ const FooterColumn = ({
     <h4 className="font-semibold text-xl text-black-1">{title}</h4>
     <ul>
       {links.map((link) => (
-        <li className="font-light text-gray-1">
+        <li className="font-light text-gray-1" key={link.field}>
           {link.href === "" ? (
             <>{link.field}</>
           ) : (
@@ -33,9 +33,13 @@ const Footer = () => {
       <div className="w-full flex max-lg:justify-center items-center max-lg:border-b-2 border-gray-3 border-opacity-25">
         <Image src="/logo-large.png" alt="logo" width={200} height={250} />
       </div>
-      <div className="w-full py-8 flex justify-center lg:justify-end gap-12">
+      <div className="w-full py-8 flex max-[400px]:flex-col max-[400px]:text-center justify-center lg:justify-end gap-12">
         {footerLinks.map((link) => (
-          <FooterColumn title={link.title} links={link.links} />
+          <FooterColumn
+            title={link.title}
+            links={link.links}
+            key={link.title}
+          />
         ))}
       </div>
     </footer>

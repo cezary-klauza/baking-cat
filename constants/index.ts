@@ -9,7 +9,7 @@ export const navbarLinks = [
     },
     {
         title: 'About Us',
-        link: '/aboutus'
+        link: '/about-us'
     },
 ]
 
