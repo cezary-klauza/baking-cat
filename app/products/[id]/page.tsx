@@ -19,7 +19,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
     async function fetchProduct() {
       const res = await getProduct(params.id);
       setData(res);
-      document.title = res.attributes.name;
+      document.title = res.name;
     }
     fetchProduct();
   }, []);
@@ -31,11 +31,8 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
       <div className="w-full shadow-sm grid grid-cols-1 xl:grid-cols-[2fr_3fr] xl:flex-row rounded-3xl overflow-hidden my-6 lg:my-12">
         <div>
           <Image
-            src={
-              process.env.NEXT_PUBLIC_STRAPI_CMS_DOMAIN +
-              data?.attributes.Image.data.attributes.url
-            }
-            alt={data?.attributes.Image.data.attributes.alternativeText}
+            src={data.image}
+            alt={data.name}
             width={500}
             height={500}
             className="w-full xl:h-full"
@@ -44,28 +41,23 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
         <div className="max-xl:p-6 px-6 flex flex-col gap-4 lg:gap-4">
           <div>
             <h1 className="font-semibold text-black-1 capitalize text-4xl sm:text-5xl">
-              {data.attributes.name}
+              {data.name}
             </h1>
             <div className="w-full flex gap-4">
               <div>
                 <h3 className="uppercase font-semibold text-gray-3">Type</h3>
-                <p className="text-black-1 capitalize">
-                  {
-                    data.attributes.product_category.data.attributes
-                      .category_name
-                  }
-                </p>
+                <p className="text-black-1 capitalize">{data.category}</p>
               </div>
-              {data.attributes.product_flavores.data.length > 0 ? (
+              {data.flavores.length > 0 ? (
                 <div>
                   <h3 className="uppercase font-semibold text-gray-3">
                     Flavores
                   </h3>
                   <ul className="flex text-black-1">
-                    {data.attributes.product_flavores.data.map((flavor) => (
-                      <li key={flavor.id} className="group flex capitalize">
+                    {data.flavores.map((flavor) => (
+                      <li key={flavor} className="group flex capitalize">
                         <Dot className="group-first:hidden" />
-                        {flavor.attributes.Taste}
+                        {flavor}
                       </li>
                     ))}
                   </ul>
@@ -77,7 +69,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
           </div>
           <p className="font-light text-2xl text-black-1">
             <strong className="font-semibold text-lg">Price:</strong>{" "}
-            {data.attributes.price}$
+            {data.price}$
           </p>
           <Button
             size="xl"
@@ -88,7 +80,7 @@ const ProductPage = ({ params }: { params: { id: string } }) => {
           </Button>
           <div className="text-black-1 w-full flex flex-col gap-2">
             <p className={fullDescription ? "" : "line-clamp-4"}>
-              {data.attributes.description}
+              {data.description}
             </p>
             <p
               className={cn(
