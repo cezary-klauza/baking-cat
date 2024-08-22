@@ -9,7 +9,7 @@ const AboutUs = () => {
       <section className="xl:flex mt-8 justify-between gap-6 bg-black-1 rounded-3xl xl:rounded-[150px] overflow-hidden relative">
         <div className="text-white py-20 xl:py-40 px-6 xl:pl-24 xl:pr-12 text-center xl:text-left w-full xl:w-1/2 flex flex-col items-center xl:items-start gap-3 xl:gap-6 relative z-20">
           <h1 className="font-semibold xl:text-6xl text-3xl">
-            Do You Want More About Us?
+            Do You Want Know More About Us?
           </h1>
           <p className="xl:text-gray-3 text-white max-xl:opacity-70 text-lg">
             We are the best chain of bakeries in Europe! You can buy our cakes

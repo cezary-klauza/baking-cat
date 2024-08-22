@@ -1,9 +1,9 @@
-type Types = "cakes" | "cookies" | "bread";
+import { Category, Flavore } from "@/types";
 
 type CheckBoxProps = {
-  name: Types;
+  name: Category | Flavore;
   title: string;
-  onChange: (isChecked: boolean, value: Types) => void;
+  onChange: (isChecked: boolean, value: Category | Flavore) => void;
 };
 
 const CheckBox = ({ name, title, onChange }: CheckBoxProps) => (

@@ -1,13 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TypeCard from "./TypeCard";
 import ProductCard from "./ProductCard";
-
-type ProductType = "cakes" | "cookies" | "bread" | undefined;
+import { Category, Product } from "@/types";
+import { getProducts } from "@/fetch";
+import Loader from "./Loader";
+import { FetchProductsError } from "@/exceptions";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 const ProductsExamplesSection = () => {
-  const [productType, setProductType] = useState<ProductType>();
+  const [productType, setProductType] = useState<Category | undefined>();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [error, setError] = useState(false);
+
+  if (error) {
+    setError(false);
+    throw new FetchProductsError();
+  }
+  useEffect(() => {
+    async function catchProducts() {
+      try {
+        const data: Product[] = await getProducts(
+          undefined,
+          undefined,
+          productType !== undefined ? [productType] : undefined
+        );
+        setProducts(await data);
+      } catch (error) {
+        setError(true);
+        console.log("work");
+      }
+    }
+    catchProducts();
+  }, [productType]);
+
+  const handleType = (type: Category) => {
+    setProductType(productType === type ? undefined : type);
+  };
 
   return (
     <section className="w-full md:p-16   text-center flex flex-col gap-6">
@@ -26,32 +56,39 @@ const ProductsExamplesSection = () => {
           imgAlt="cake"
           title="Cakes"
           isActive={productType === "cakes"}
-          onClick={() => setProductType("cakes")}
+          onClick={() => handleType("cakes")}
         />
         <TypeCard
           img="/cookie-type.svg"
           imgAlt="cookie"
           title="Cookies"
           isActive={productType === "cookies"}
-          onClick={() => setProductType("cookies")}
+          onClick={() => handleType("cookies")}
         />
         <TypeCard
           img="/bread-type.svg"
           imgAlt="bread"
           title="Bread"
           isActive={productType === "bread"}
-          onClick={() => setProductType("bread")}
+          onClick={() => handleType("bread")}
         />
       </div>
-
-      <div className="w-full max-w-[800px] m-auto grid grid-cols-3 gap-6 my-8">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </div>
+      {products.length === 0 ? (
+        <Loader />
+      ) : (
+        <div className="w-full max-w-[800px] m-auto grid grid-cols-3  gap-6 my-8">
+          {products.map(({ _id, name, price, image }) => (
+            <ProductCard
+              name={name}
+              id={_id}
+              price={price}
+              img={image}
+              altImg={name}
+              key={_id}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

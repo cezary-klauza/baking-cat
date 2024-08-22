@@ -43,21 +43,22 @@ const Navbar = () => {
 
   return (
     <nav className="flex w-full justify-between items-center py-3">
-      <Image
-        src="/logo-large.png"
-        alt="logo"
-        width={140}
-        height={140}
-        className="md:block hidden"
-      />
-      <Image
-        src="/logo-small.png"
-        alt="logo"
-        width={40}
-        height={40}
-        className="md:hidden block"
-      />
-
+      <Link href="/">
+        <Image
+          src="/logo-large.png"
+          alt="logo"
+          width={140}
+          height={140}
+          className="md:block hidden"
+        />
+        <Image
+          src="/logo-small.png"
+          alt="logo"
+          width={40}
+          height={40}
+          className="md:hidden block"
+        />
+      </Link>
       <ul className="flex justify-center items-center gap-12 max-md:hidden">
         {navbarLinks.map(({ link, title }) => (
           <NavLink
