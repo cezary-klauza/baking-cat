@@ -7,22 +7,27 @@ import { cn } from "@/lib/utils";
 import { Product } from "@/types";
 import { Dot, ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ProductPage = ({ params }: { params: { id: string } }) => {
   const [data, setData] = useState<Product | undefined>();
+  const [isNotFound, setIsNotFound] = useState(false);
   const [fullDescription, setFullDescription] = useState(false);
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     async function fetchProduct() {
       const res = await getProduct(params.id);
       setData(res);
-      document.title = res.name;
+      if (res !== undefined) document.title = res.name;
+      else setIsNotFound(true);
     }
     fetchProduct();
   }, []);
+
+  useEffect(() => {
+    if (isNotFound) notFound();
+  }, [isNotFound]);
 
   if (data === undefined) {
     return <ProductSkeleton />;

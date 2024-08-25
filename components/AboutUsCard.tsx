@@ -76,7 +76,7 @@ const AboutUsCard = () => {
           ))}
         </div>
 
-        <Link href="/aboutus" className="max-lg:w-full">
+        <Link href="/about-us" className="max-lg:w-full">
           <Button size="xl" className="bg-red-2 text-xl hover:bg-red-1 w-full">
             Read More
           </Button>
